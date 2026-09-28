@@ -1,8 +1,7 @@
-import React from "react";
 import { SectionTitle } from "./SectionTitle";
 import { getCategory } from "../lib/news";
 
-function MoreStories({ more }) {
+function MoreStories({ more, onArticleClick }) {
   return (
     <div>
       <section className="border-t-2 border-black py-8">
@@ -12,6 +11,7 @@ function MoreStories({ more }) {
           {more.slice(0, 3).map((article) => (
             <article
               key={article.uri}
+              onClick={() => onArticleClick(article)}
               className="border-b border-black/20 pb-5 md:border-b-0"
             >
               <span className="font-sans text-[9px] font-bold tracking-[0.2em]">

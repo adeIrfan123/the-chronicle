@@ -1,35 +1,86 @@
-import React from "react";
+"use client";
+
+import { useEffect, useState } from "react";
+
 import Header from "./components/Header";
-import LatestBar from "./components/LatestBar";
+import Navigation from "./components/Navigation";
+import NewsContent from "./components/NewsContet";
+import NewsDetail from "./components/NewsDetail";
 import FooterSection from "./components/FooterSection";
-import HeroSection from "./components/HeroSection";
-import LatestNews from "./components/LatestNews";
-import MoreStories from "./components/MoreStories";
-import ErrorLoad from "./components/ErrorLoad";
-import { getTopStories, organizeNews } from "./lib/news";
 
-async function Home() {
-  let news;
+export default function Page() {
+  const [currentCategory, setCurrentCategory] = useState("home");
+  const [news, setNews] = useState([]);
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
-  try {
-    news = await getTopStories("home");
-  } catch {
-    return <ErrorLoad />;
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(false);
+
+  console.log("selectedArticle:", selectedArticle);
+
+  useEffect(() => {
+    async function loadNews() {
+      try {
+        setLoading(true);
+        setError(false);
+
+        const response = await fetch(`/api/news?category=${currentCategory}`);
+
+        if (!response.ok) {
+          throw new Error("Gagal mengambil berita");
+        }
+
+        const data = await response.json();
+
+        setNews(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error(error);
+        setError(true);
+        setNews([]);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadNews();
+  }, [currentCategory]);
+
+  function handleCategoryChange(category) {
+    setSelectedArticle(null);
+    setCurrentCategory(category);
   }
 
-  const organizedNews = organizeNews(news);
+  function handleArticleClick(article) {
+    setSelectedArticle(article);
+  }
 
-  const { headline, secondary, more } = organizedNews;
   return (
     <div>
       <Header />
-      <LatestBar />
-      <HeroSection headline={headline} secondary={secondary} />
-      <LatestNews news={news} />
-      <MoreStories more={more} news={news} />
+
+      <Navigation
+        currentCategory={currentCategory}
+        onCategoryChange={handleCategoryChange}
+      />
+
+      <main>
+        {selectedArticle ? (
+          <NewsDetail
+            article={selectedArticle}
+            onBack={() => setSelectedArticle(null)}
+          />
+        ) : (
+          <NewsContent
+            category={currentCategory}
+            news={news}
+            loading={loading}
+            error={error}
+            onArticleClick={handleArticleClick}
+          />
+        )}
+      </main>
+
       <FooterSection />
     </div>
   );
 }
-
-export default Home;

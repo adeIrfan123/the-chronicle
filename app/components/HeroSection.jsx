@@ -1,13 +1,12 @@
-import React from "react";
 import { getCategory, getImage } from "../lib/news";
 
-function HeroSection({ headline, secondary, latest, more }) {
-  if (headline) {
-    console.log("data kosong");
-  }
+function HeroSection({ headline, secondary, onArticleClick }) {
   return (
     <section className="grid border-b-2 border-black py-8 lg:grid-cols-[1.6fr_1fr]">
-      <article className="border-b border-black/30 pb-8 lg:border-b-0 lg:border-r lg:pr-8">
+      <article
+        onClick={() => onArticleClick(headline)}
+        className="border-b border-black/30 pb-8 lg:border-b-0 lg:border-r lg:pr-8"
+      >
         <div className="mb-4">
           <span className="font-sans text-[10px] font-bold tracking-[0.2em]">
             {getCategory(headline)}
@@ -53,6 +52,7 @@ function HeroSection({ headline, secondary, latest, more }) {
         {secondary.map((article) => (
           <article
             key={article.uri}
+            onClick={() => onArticleClick(headline)}
             className="border-b border-black/30 pb-8 last:border-b-0"
           >
             {getImage(article) && (
