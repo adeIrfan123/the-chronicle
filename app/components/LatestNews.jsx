@@ -11,7 +11,6 @@ function LatestNews({ latest, secondary, onArticleClick }) {
           {latest.map((article, index) => (
             <article
               key={article.uri}
-              onClick={() => onArticleClick(article)}
               className={`grid gap-4 py-5 md:grid-cols-[80px_110px_1fr] ${
                 index !== latest.length - 1 ? "border-b border-black/20" : ""
               }`}
@@ -32,7 +31,10 @@ function LatestNews({ latest, secondary, onArticleClick }) {
                 {getCategory(article)}
               </span>
 
-              <h3 className="font-serif text-xl font-bold leading-tight">
+              <h3
+                onClick={() => onArticleClick(article)}
+                className="cursor-pointer font-serif text-xl font-bold leading-tight"
+              >
                 {article.title}
               </h3>
             </article>
@@ -46,14 +48,16 @@ function LatestNews({ latest, secondary, onArticleClick }) {
         {secondary.slice(0, 2).map((article) => (
           <article
             key={article.uri}
-            onClick={() => onArticleClick(article)}
             className="border-b border-black/20 py-5 last:border-0"
           >
             <span className="font-sans text-[9px] font-bold tracking-[0.15em]">
               {getCategory(article)}
             </span>
 
-            <h3 className="mt-2 font-serif text-xl font-bold leading-tight">
+            <h3
+              onClick={() => onArticleClick(article)}
+              className="cursor-pointer mt-2 font-serif text-xl font-bold leading-tight"
+            >
               {article.title}
             </h3>
 

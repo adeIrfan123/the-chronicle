@@ -11,14 +11,16 @@ function MoreStories({ more, onArticleClick }) {
           {more.slice(0, 3).map((article) => (
             <article
               key={article.uri}
-              onClick={() => onArticleClick(article)}
               className="border-b border-black/20 pb-5 md:border-b-0"
             >
               <span className="font-sans text-[9px] font-bold tracking-[0.2em]">
                 {getCategory(article)}
               </span>
 
-              <h3 className="mt-2 font-serif text-2xl font-bold leading-tight">
+              <h3
+                onClick={() => onArticleClick(article)}
+                className="cursor-pointer mt-2 font-serif text-2xl font-bold leading-tight"
+              >
                 {article.title}
               </h3>
 

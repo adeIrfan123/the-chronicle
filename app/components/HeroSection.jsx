@@ -3,17 +3,17 @@ import { getCategory, getImage } from "../lib/news";
 function HeroSection({ headline, secondary, onArticleClick }) {
   return (
     <section className="grid border-b-2 border-black py-8 lg:grid-cols-[1.6fr_1fr]">
-      <article
-        onClick={() => onArticleClick(headline)}
-        className="border-b border-black/30 pb-8 lg:border-b-0 lg:border-r lg:pr-8"
-      >
+      <article className="border-b border-black/30 pb-8 lg:border-b-0 lg:border-r lg:pr-8">
         <div className="mb-4">
           <span className="font-sans text-[10px] font-bold tracking-[0.2em]">
             {getCategory(headline)}
           </span>
         </div>
 
-        <h2 className="max-w-4xl font-serif text-4xl font-black leading-[0.95] tracking-[-0.035em] sm:text-5xl md:text-6xl">
+        <h2
+          onClick={() => onArticleClick(headline)}
+          className="cursor-pointer max-w-4xl font-serif text-4xl font-black leading-[0.95] tracking-[-0.035em] sm:text-5xl md:text-6xl"
+        >
           {headline.title}
         </h2>
 
@@ -52,7 +52,6 @@ function HeroSection({ headline, secondary, onArticleClick }) {
         {secondary.map((article) => (
           <article
             key={article.uri}
-            onClick={() => onArticleClick(headline)}
             className="border-b border-black/30 pb-8 last:border-b-0"
           >
             {getImage(article) && (
@@ -67,7 +66,10 @@ function HeroSection({ headline, secondary, onArticleClick }) {
               {getCategory(article)}
             </span>
 
-            <h3 className="mt-2 font-serif text-2xl font-bold leading-tight">
+            <h3
+              onClick={() => onArticleClick(headline)}
+              className="cursor-pointer mt-2 font-serif text-2xl font-bold leading-tight"
+            >
               {article.title}
             </h3>
 

@@ -23,7 +23,7 @@ export default function Navigation({ currentCategory, onCategoryChange }) {
             <button
               key={category.value}
               onClick={() => onCategoryChange(category.value)}
-              className={`px-2 py-1 font-serif text-sm font-bold transition ${
+              className={`px-2 py-1 font-serif text-sm font-bold transition cursor-pointer ${
                 isActive
                   ? "bg-black text-white"
                   : "text-black hover:bg-black hover:text-white"

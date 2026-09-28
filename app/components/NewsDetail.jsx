@@ -8,7 +8,7 @@ export default function NewsDetail({ article, onBack }) {
       <article className="mx-auto max-w-5xl">
         <button
           onClick={onBack}
-          className="mb-8 font-serif text-sm font-bold underline"
+          className="cursor-pointer mb-8 font-serif text-sm font-bold underline"
         >
           ← Back to News
         </button>
